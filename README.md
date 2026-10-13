@@ -40,7 +40,11 @@ Use a 3.3 V UART adapter only, never 5 V. 115200 8N1 works; U-Boot may run at 15
 ## Root: the `eco_passwd` algorithm
 
 The root password is unique per unit and set at every boot by the obfuscated `eco_passwd`
-(XOR-0x55). The 37C3 slide-79 formula does not reproduce it on px30. I captured the real algorithm
+(XOR-0x55). The easy practical path is Dennis Giese's calculator at
+<https://builder.dontvacuum.me/ecopassword.php>: give it the serial and it returns the password.
+
+The algorithm below documents what that calculator computes for this px30 line, and corrects the
+simplified 37C3 slide-79 version, which does not reproduce the password on px30. I captured it
 on-device and reproduced it offline:
 
 ```

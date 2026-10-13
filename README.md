@@ -40,12 +40,11 @@ Use a 3.3 V UART adapter only, never 5 V. 115200 8N1 works; U-Boot may run at 15
 ## Root: the `eco_passwd` algorithm
 
 The root password is unique per unit and set at every boot by the obfuscated `eco_passwd`
-(XOR-0x55). The easy practical path is Dennis Giese's calculator at
-<https://builder.dontvacuum.me/ecopassword.php>: give it the serial and it returns the password.
-
-The algorithm below documents what that calculator computes for this px30 line, and corrects the
-simplified 37C3 slide-79 version, which does not reproduce the password on px30. I captured it
-on-device and reproduced it offline:
+(XOR-0x55). Dennis Giese's calculator at <https://builder.dontvacuum.me/ecopassword.php> is the
+easy path for the models it supports, but as of 2026-10 its device list (Goat, X1, X2, T20, T30,
+Airbot Z1, 9x0 series) does not include the T8 AIVI / px30 line, and the 37C3 slide-79 formula does
+not reproduce the password on px30 either. So here is the actual algorithm, captured on-device and
+reproduced offline:
 
 ```
 input   = product + MAGIC + sn[-8:] + "\n"
